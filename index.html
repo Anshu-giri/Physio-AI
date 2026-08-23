@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PhysioMind AI — Multilingual AI physiotherapy with real-time pose tracking, personalized rehab plans, and recovery analytics in English & Hindi." />
+  <title>PhysioMind AI — Your Digital Physiotherapist</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<header class="nav-wrap">
+  <div class="container nav-inner">
+
+    <div class="brand" onclick="showView('landing')">
+      <div class="brand-icon">⚕</div>
+      <span id="appName">PhysioMind AI</span>
+    </div>
+
+    <nav class="nav-links">
+      <button class="nav-link active" data-view="landing">Home</button>
+      <button class="nav-link" data-view="assistant">AI Assistant</button>
+      <button class="nav-link" data-view="exercises">Exercises</button>
+      <button class="nav-link" data-view="plan">My Plan</button>
+      <button class="nav-link" data-view="analytics">Analytics</button>
+    </nav>
+
+    <div class="nav-right">
+      <button class="lang-btn" id="langBtn">🇮🇳 Hindi</button>
+      <button class="btn btn-sm btn-outline" id="authBtn" onclick="openAuth()">Login / Sign Up</button>
+    </div>
+
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════ -->
+<main>
+
+  <!-- ─────────────── VIEW: LANDING ─────────────── -->
+  <div class="view active" id="view-landing">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="hero anim-fade-up">
+        <div>
+          <div class="hero-badge" id="heroBadge">🇮🇳 English + हिंदी · Real-time Pose AI</div>
+          <h1 class="hero-title" id="heroTitle">Recover faster with AI-guided physiotherapy</h1>
+          <p class="hero-sub" id="heroSub">Multilingual symptom analysis, personalized rehab plans, and real-time posture correction using your camera — in English &amp; Hindi.</p>
+          <div class="hero-btns">
+            <button class="btn btn-primary btn-lg" id="heroCta" onclick="showView('assistant')">Start Assessment →</button>
+            <button class="btn btn-outline btn-lg" id="heroSec" onclick="showView('exercises')">Explore Exercises</button>
+          </div>
+          <div class="hero-stats">
+            <div><div class="stat-n">17</div><div class="stat-l" id="stat1">Pose keypoints tracked</div></div>
+            <div><div class="stat-n">12+</div><div class="stat-l" id="stat2">Guided exercises</div></div>
+            <div><div class="stat-n">2</div><div class="stat-l" id="stat3">Languages supported</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="hero-img-wrap">
+            <img src="hero.jpg" alt="AI physiotherapy pose tracking" />
+            <div class="hero-img-badge">
+              <div class="live-dot"></div>
+              <span id="liveBadge">AI Pose Tracking Live</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="section">
+        <div class="sec-center">
+          <div class="sec-tag" id="featTag">Full Pipeline</div>
+          <h2 class="sec-title" id="featTitle">A Complete AI Physiotherapy Pipeline</h2>
+          <p class="sec-desc" id="featDesc">From input to recovery — NLP, computer vision &amp; healthcare knowledge combined.</p>
+        </div>
+        <div class="features-grid" id="featuresGrid"></div>
+      </section>
+
+      <!-- Demo Banner -->
+      <section class="section-sm">
+        <div class="demo-banner">
+          <div>
+            <h2 class="demo-title" id="demoTitle">Guided Video + AI Posture Monitoring</h2>
+            <p class="demo-desc" id="demoDesc">Each prescribed exercise includes a demo video. Your front camera captures movement, AI compares live pose, counts reps, and gives instant voice/text corrections — pausing for unsafe movements.</p>
+            <ul class="demo-bullets" id="demoBullets"></ul>
+            <button class="btn btn-ghost-white btn-lg" style="margin-top:1.75rem" onclick="showView('exercises')" id="demoCta">Try Live Pose Demo →</button>
+          </div>
+          <div class="demo-img-box">
+            <img src="pose-demo.jpg" alt="AI pose monitoring demo" />
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section class="section">
+        <div class="sec-center">
+          <h2 class="sec-title" id="stepsTitle">How It Works</h2>
+        </div>
+        <div class="steps-grid" id="stepsGrid"></div>
+      </section>
+
+      <!-- CTA -->
+      <section class="section-sm" style="padding-bottom:5rem">
+        <div class="cta-card">
+          <h2 class="cta-title" id="ctaTitle">Start Your Recovery Today</h2>
+          <p class="cta-desc" id="ctaDesc">Sign up free and get your first AI assessment in minutes.</p>
+          <button class="btn btn-primary btn-lg" style="margin-top:1.5rem" id="ctaBtn" onclick="showView('assistant')">Start Assessment →</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ─────────────── VIEW: AI ASSISTANT ─────────── -->
+  <div class="view" id="view-assistant">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title" id="assistTitle">AI Physio Assistant</h1>
+        <p class="page-sub" id="assistSub">Describe symptoms via text, voice, or upload a medical report</p>
+      </div>
+
+      <div class="assistant-grid">
+
+        <!-- Chat box -->
+        <div class="chat-box">
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-empty" id="chatEmpty">
+              <div class="chat-empty-icon">💬</div>
+              <p id="chatEmptyMsg">Type or speak your symptoms below to get instant AI analysis.</p>
+            </div>
+          </div>
+
+          <!-- OCR status -->
+          <div class="ocr-status" id="ocrStatus"></div>
+
+          <!-- Quick chips -->
+          <div class="chips-row" id="chipsRow"></div>
+
+          <!-- Input bar -->
+          <div class="chat-input-row">
+            <button class="icon-btn" id="attachBtn" title="Upload Report">📎</button>
+            <input type="file" id="fileInput" accept="image/*,.pdf" style="display:none" />
+            <button class="icon-btn" id="micBtn" title="Speak Symptoms">🎤</button>
+            <input class="chat-input" id="chatInput" type="text" placeholder="Type your symptoms…" />
+            <button class="btn btn-primary" id="sendBtn">Send</button>
+          </div>
+        </div>
+
+        <!-- Side panel -->
+        <div style="display:flex;flex-direction:column;gap:1rem">
+
+          <div class="panel">
+            <div class="panel-label" id="diagLabel">AI Diagnosis</div>
+            <div id="diagContent">
+              <p style="font-size:.88rem;color:var(--slate-500)" id="diagPlaceholder">Your diagnosis will appear here after describing your symptoms.</p>
+            </div>
+            <button class="btn btn-primary" id="genPlanBtn" style="width:100%;margin-top:1.25rem;display:none" onclick="generatePlan()"></button>
+          </div>
+
+          <div class="warning-card">
+            ⚠ <span id="disclaimerText">AI suggestions do not replace professional medical advice. Consult a licensed physiotherapist.</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────── VIEW: EXERCISES ────────────── -->
+  <div class="view" id="view-exercises">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title" id="exTitle">Guided Exercise Library</h1>
+        <p class="page-sub" id="exSub">Practice each exercise with live AI posture monitoring</p>
+      </div>
+      <div class="cat-bar" id="catBar"></div>
+      <div class="ex-grid" id="exGrid"></div>
+      <div style="padding-bottom:3rem"></div>
+    </div>
+  </div>
+
+  <!-- ─────────────── VIEW: MY PLAN ──────────────── -->
+  <div class="view" id="view-plan">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title" id="planTitle">My Recovery Plan</h1>
+      </div>
+      <div id="planContainer"></div>
+      <div style="padding-bottom:3rem"></div>
+    </div>
+  </div>
+
+  <!-- ─────────────── VIEW: ANALYTICS ────────────── -->
+  <div class="view" id="view-analytics">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title" id="analyticsTitle">Recovery Analytics</h1>
+        <p class="page-sub" id="analyticsSub">Your digital biomarkers over time</p>
+      </div>
+      <div id="analyticsContainer"></div>
+      <div style="padding-bottom:3rem"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 PhysioMind AI. All rights reserved.</span>
+    <span id="footerDisclaimer">AI advice is for informational guidance only. Always consult a professional.</span>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════
+     AUTH MODAL
+══════════════════════════════════════════════ -->
+<div class="modal-bg" id="authModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeAuth()">✕</button>
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tabLogin" onclick="switchAuthTab('login')">Login</button>
+      <button class="modal-tab" id="tabSignup" onclick="switchAuthTab('signup')">Sign Up</button>
+    </div>
+    <form onsubmit="handleAuth(event)">
+      <div class="form-field" id="nameField" style="display:none">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" id="authName" type="text" placeholder="e.g. Arjun Sharma" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" id="authEmail" type="email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" placeholder="••••••••" required />
+      </div>
+      <button type="submit" class="btn btn-primary" id="authSubmit" style="width:100%;margin-top:.5rem">Login</button>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SESSION MODAL
+══════════════════════════════════════════════ -->
+<div class="modal-bg" id="sessionModal">
+  <div class="modal-box session-modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+      <h2 style="font-size:1.25rem;font-weight:800" id="sessionTitle">Exercise Session</h2>
+      <button class="btn btn-outline btn-sm" onclick="closeSession()">✕ Stop</button>
+    </div>
+
+    <div class="session-canvas">
+      <img src="pose-demo.jpg" alt="Pose simulation" id="sessionImg" />
+      <div class="session-hud">
+        <div class="hud-box">
+          <div class="hud-label" id="hudRepLabel">Reps</div>
+          <div class="hud-val" id="hudReps">0 / 10</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label" id="hudQualLabel">Form Quality</div>
+          <div class="hud-val" id="hudQuality" style="color:#5eead4">95%</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label" id="hudTimeLabel">Time</div>
+          <div class="hud-val" id="hudTime">0s</div>
+        </div>
+      </div>
+      <div class="session-feedback" id="sessionFeedback">🟢 Ready — keep camera steady</div>
+    </div>
+
+    <div style="margin-top:1rem;padding:.75rem 1rem;background:var(--slate-50);border-radius:var(--r-md);font-size:.85rem;color:var(--slate-600)" id="sessionInstructions">
+      Position yourself in front of the camera. Follow along with the exercise and maintain proper form throughout the movement.
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
